@@ -1,0 +1,28 @@
+Package: TimeTalk
+Title: TimeTalk is an R package utilize temporal information to infer cell-cell communication during development process from single-cell genomics data
+Version: 0.0.3
+Authors@R: 
+    person(given = "longteng",
+           family = "wang",
+           role = c("aut", "cre"),
+           email = "longtenwang@gmail.com",
+           comment = c(ORCID = "0000-0002-0904-8081"))
+Description: Here, we developed a workflow named TimeTalk to perform cell-cell communication analysis by utilizting temporal information in single-cell omics data.This package provide all the function required for TimeTalk workflow.
+Depends: R (>= 3.6.0)
+Imports:
+    Seurat,
+    monocle3,
+    tidyverse,
+    ggplot2,
+    cellAlign,
+    lmtest,
+    snow,
+    future,
+    future.apply,
+    RTN,
+    dtw
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
