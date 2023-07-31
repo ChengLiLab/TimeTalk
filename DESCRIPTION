@@ -1,6 +1,6 @@
 Package: TimeTalk
 Title: TimeTalk is an R package utilize temporal information to infer cell-cell communication during development process from single-cell genomics data
-Version: 0.0.316
+Version: 0.0.310.316
 Authors@R: 
     person(given = "longteng",
            family = "wang",

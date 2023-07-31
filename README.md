@@ -30,21 +30,31 @@ devtools::install_github("ChengLiLab/TimeTalk",ref="main")
 
 ### Quick start (Demo)
 
+Users can run this demo to quikstart of TimeTalk
 ```
-tmp.mra.res <- readRDS(file = "res/R/B_blastoid_RTN_mra_result.rds")
-LRpairs.df <- read.delim(file = "database/Ligand-Receptor-Pairs/Mouse/Mouse-2020-Shao-LR-pairs.txt",stringsAsFactors = F)
+library(TimeTalk)
+library(Seurat)
+library(tidyverse)
+library(monocle3)
+tmp.path <- system.file("extdata/seu_demo.rds",package = "TimeTalk")
+seu.small <- readRDS(file = tmp.path)
 
-####load sc object
-seu <- readRDS(file = "res/R/B_blastoid_seurat_inter_2_data_2022042218.rds")
-cds <- readRDS(file = "res/R/B_blastoid_monocle3_cds_2022042219.rds")
-####check cell types
-seu$CellType <- Idents(seu)
+tmp.path <- system.file("extdata/cds_demo.rds",package = "TimeTalk")
+cds.small <- readRDS(file = tmp.path)
+
+tmp.path <- system.file("extdata/B_blastoid_RTN_mra_result.rds",
+                        package = "TimeTalk")
+tmp.mra.res <- readRDS(file = tmp.path)
+
+tmp.path <- system.file("extdata/Mouse-2020-Shao-LR-pairs.txt",
+                        package = "TimeTalk")
+LRpairs.df <- read.delim(file = tmp.path,
+                         stringsAsFactors = F)
 
 
-#DimPlot(seu)
 
-TimeTalk.result <- RunTimeTalk(tmp.cds=cds,
-                               tmp.seu=seu,
+TimeTalk.result <- RunTimeTalk(tmp.cds=cds.small,
+                               tmp.seu=seu.small,
                                tmp.orig.ident = "blastocyst",
                                tmp.ident.1="EPI",
                                tmp.ident.2 = "PE",
@@ -60,6 +70,7 @@ tmp.res <- TimeTalk.result %>%
   filter(category == "PASS") %>%
   pull(LR) %>%
   unique()
+
 
 ```
 
