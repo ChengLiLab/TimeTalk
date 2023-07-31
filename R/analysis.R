@@ -222,7 +222,7 @@ RunTimeTalk <- function(tmp.cds,
   Rgenelist <- LRpairs.df$receptor_gene_symbol
 
   ### using data in RNA assay
-  tmp.data <- GetAssayData(object = seu, slot = "data", assay = "RNA")
+  tmp.data <- GetAssayData(object = tmp.seu, slot = "data", assay = "RNA")
   gene_symbols <- rownames(tmp.data)
   l.remove <- setdiff(Lgenelist, gene_symbols)
   r.remove <- setdiff(Rgenelist, gene_symbols)
@@ -234,10 +234,10 @@ RunTimeTalk <- function(tmp.cds,
 
   cat(paste0(tmp.ident.1, "-", tmp.ident.2, " start:"), sep = "\n")
   tmp.df <- data.frame(
-    pseudotime = pseudotime(cds, reduction_method = "UMAP"),
+    pseudotime = pseudotime(tmp.cds, reduction_method = "UMAP"),
     stringsAsFactors = F
   )
-  tmp.df <- cbind(seu[[]], tmp.df)
+  tmp.df <- cbind(tmp.seu[[]], tmp.df)
   ### Check CellTypes
   if (!c("CellType") %in% colnames(tmp.df)) {
     stop("Please add CellType annotation in seurat object!")
