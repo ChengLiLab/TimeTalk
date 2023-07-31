@@ -13,14 +13,66 @@
 
 ## installation
 
-devtools::install_github("ChengLiLab/TimeTalk",ref="master")
+Require systems: Ubuntu (20.04), users can test other linux distributions.
 
++ Install require software in Ubuntu:
+```
+sudo apt-get install libcairo2-dev
+```
++ Install require package in R
+```
+devtools::install_github('cole-trapnell-lab/monocle3')
+devtools::install_github("shenorrLab/cellAlign")
+BiocManager::install("RTN")
+devtools::install_github("ChengLiLab/TimeTalk",ref="main")
+```
 ## How to run TimeTalk?
+
+### Quick start (Demo)
+
+```
+tmp.mra.res <- readRDS(file = "res/R/B_blastoid_RTN_mra_result.rds")
+LRpairs.df <- read.delim(file = "database/Ligand-Receptor-Pairs/Mouse/Mouse-2020-Shao-LR-pairs.txt",stringsAsFactors = F)
+
+####load sc object
+seu <- readRDS(file = "res/R/B_blastoid_seurat_inter_2_data_2022042218.rds")
+cds <- readRDS(file = "res/R/B_blastoid_monocle3_cds_2022042219.rds")
+####check cell types
+seu$CellType <- Idents(seu)
+
+
+#DimPlot(seu)
+
+TimeTalk.result <- RunTimeTalk(tmp.cds=cds,
+                               tmp.seu=seu,
+                               tmp.orig.ident = "blastocyst",
+                               tmp.ident.1="EPI",
+                               tmp.ident.2 = "PE",
+                               LRpairs.df = LRpairs.df,
+                               tmp.mra.res = tmp.mra.res,
+                               tmp.winsz = 0.1,
+                               tmp.lags = 1,
+                               numPts = 200,
+                               tmp.SCC.cutoff = 0.2,
+                               tmp.granger.cutoff = 1e-2)
+
+tmp.res <- TimeTalk.result %>%
+  filter(category == "PASS") %>%
+  pull(LR) %>%
+  unique()
+
+```
+
+
 
 ### Step 1, build celltype specific TRN of each cell type
 
+As for demonstration, we don't recommend users to run this code, as it was very time consuming. But we encourage the users to test this code for their own data.
+
 ```
-### build all the CellType specific TRN, not run it will take too long time
+library(TimeTalk)
+### build all the CellType specific TRN, 
+### Before run it make sure it will take too long time
 lapply(levels(seu), function(ii){
   rtna <- myGetCellTypeSpecificTRN(tmp.seu = seu,
                                    tmp.ident = ii,
@@ -54,7 +106,9 @@ saveRDS(object = tmp.mra.res,file = "res/R/B_blastoid_RTN_mra_result.rds")
 
 ```
 
-### Step two: Run TimeTalk
+### Step 2: Run TimeTalk
+
+
 ```
 tmp.mra.res <- readRDS(file = "res/R/B_blastoid_RTN_mra_result.rds")
 LRpairs.df <- read.delim(file = "database/Ligand-Receptor-Pairs/Mouse/Mouse-2020-Shao-LR-pairs.txt",stringsAsFactors = F)
@@ -72,15 +126,14 @@ TimeTalk.result <- RunTimeTalk(tmp.cds=tmp.cds,
 
 According to our simulation results, the Granger causality conclusion is affected by choice of parameter winsz. Thus,  we acknowledge the need for additional methods to validate the inferred potential regulatory relationship between ligand-receptor interactions and transcription factors. Regrettably, the scarcity of high temporal resolution datasets hinders our ability to address this issue. Despite this limitation, we have acknowledged in the Discussion section of the manuscript that our causal analysis serves as a helpful reference, and we intend to improve our approach in the future with more accurate data. Furthermore, we advise users to conduct additional data analysis and experiment with various parameter combinations to achieve more dependable results when utilizing TimeTalk for cell communication analysis.
 
-### To do
-
-make the readme file more clear...
 
 ### log 
 
 + update log and fix function bugs: 2023.05.02.
 
 + update the documentation file: 2023.06.01.
+
++ Add the demo data: 2023.07.30
 
 ### cication
 
