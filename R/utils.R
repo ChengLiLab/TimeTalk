@@ -9,3 +9,19 @@
 MinMaxScale <- function(x) {
   (x - min(x)) / (max(x) - min(x))
 }
+
+#' Function to remove NA
+#'
+#' This function replace NA by 0
+#' @param df data.frame
+#' @return a data.frame without NA
+#' @export
+#' @examples
+#' myRemoveNA(data.frame(x = c(0,1,NA),y = c(1,2,3)))
+
+myRemoveNA <- function(df){
+  df[is.na(df)] <- 0
+  return(df)
+}
+
+
