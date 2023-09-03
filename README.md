@@ -148,4 +148,4 @@ According to our simulation results, the Granger causality conclusion is affecte
 
 ### cication
 
-TimeTalk: Deciphering cell-cell communication during early embryo development using single-cell RNA-seq datasets (manuscript under revision)
+Wang, L., Zheng, Y., Sun, Y. et al. TimeTalk uses single-cell RNA-seq datasets to decipher cell-cell communication during early embryo development. Commun Biol 6, 901 (2023). https://doi.org/10.1038/s42003-023-05283-2
